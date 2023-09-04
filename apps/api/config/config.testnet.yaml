@@ -6,12 +6,6 @@ urls:
     - 'https://devnet-microservice.multiversx.com'
     - 'https://microservice.multiversx.com'
   redis: '127.0.0.1'
-database:
-  host: 'localhost'
-  port: 3306
-  username: 'root'
-  password: 'root'
-  name: 'example'
 features:
   publicApi:
     enabled: true
