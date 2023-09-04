@@ -112,6 +112,15 @@ export class ApiConfigService {
     return maxLookBehind;
   }
 
+  getCacheWarmerFeaturePort(): number {
+    const featurePort = this.configService.get<number>('features.cacheWarmer.port');
+    if (featurePort === undefined) {
+      throw new Error('No cache warmer port present');
+    }
+
+    return featurePort;
+  }
+
   getSecurityAdmins(): string[] {
     const admins = this.configService.get<string[]>('security.admins');
     if (admins === undefined) {

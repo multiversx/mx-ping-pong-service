@@ -1,0 +1,10 @@
+chainId: '1'
+urls:
+  api: 'https://api.multiversx.com'
+  redis: '127.0.0.1'
+features:
+  cacheWarmer:
+    enabled: true
+    port: 5201
+contracts:
+  pingPong: 'erd1qqqqqqqqqqqqqpgq72l6vl07fkn3alyfq753mcy4nakm0l72396qkcud5x'

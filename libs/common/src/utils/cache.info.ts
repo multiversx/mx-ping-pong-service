@@ -11,8 +11,8 @@ export class CacheInfo {
     };
   }
 
-  static Examples: CacheInfo = {
-    key: "examples",
+  static PingPongStats: CacheInfo = {
+    key: "stats:ping-pong",
     ttl: Constants.oneHour(),
   };
 }
