@@ -182,4 +182,13 @@ export class ApiConfigService {
 
     return contract;
   }
+
+  getChainId(): string {
+    const chainId = this.configService.get<string>('chainId');
+    if (!chainId) {
+      throw new Error('No chainId present');
+    }
+
+    return chainId;
+  }
 }

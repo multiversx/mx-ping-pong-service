@@ -1,3 +1,4 @@
+chainId: 'T'
 urls:
   api: 'https://testnet-api.multiversx.com'
   swagger:

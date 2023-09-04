@@ -1,3 +1,4 @@
+chainId: '1'
 urls:
   api: 'https://api.multiversx.com'
   swagger:

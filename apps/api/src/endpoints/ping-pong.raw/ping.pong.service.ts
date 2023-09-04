@@ -1,4 +1,4 @@
-import { Address } from "@multiversx/sdk-core/out";
+import { Address, TokenTransfer, Transaction, TransactionPayload } from "@multiversx/sdk-core/out";
 import { Injectable } from "@nestjs/common";
 import { ApiConfigService } from "@mvx-monorepo/common";
 import { ApiService } from "@multiversx/sdk-nestjs-http";
@@ -24,6 +24,36 @@ export class PingPongService {
     }
 
     return { status: "awaiting_pong", timeToPong: secondsRemaining };
+  }
+
+  generatePingTransaction(address: Address): any {
+    const contract = this.apiConfigService.getPingPongContract();
+
+    const pingTransaction = new Transaction({
+      data: new TransactionPayload("ping"),
+      gasLimit: 60000000,
+      sender: address,
+      receiver: Address.fromString(contract),
+      value: TokenTransfer.egldFromAmount(1),
+      chainID: this.apiConfigService.getChainId(),
+    });
+
+    return pingTransaction.toPlainObject();
+  }
+
+  generatePongTransaction(address: Address): any {
+    const contract = this.apiConfigService.getPingPongContract();
+
+    const pongTransaction = new Transaction({
+      data: new TransactionPayload("pong"),
+      gasLimit: 60000000,
+      sender: address,
+      receiver: Address.fromString(contract),
+      value: TokenTransfer.egldFromAmount(0),
+      chainID: this.apiConfigService.getChainId(),
+    });
+
+    return pongTransaction.toPlainObject();
   }
 
   async getPongDeadline(address: Address): Promise<number | null> {

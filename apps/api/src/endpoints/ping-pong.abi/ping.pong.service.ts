@@ -1,4 +1,4 @@
-import { AbiRegistry, Address, ResultsParser, SmartContract } from "@multiversx/sdk-core/out";
+import { AbiRegistry, Address, ResultsParser, SmartContract, TokenTransfer } from "@multiversx/sdk-core/out";
 import { Injectable } from "@nestjs/common";
 import pingPongAbi from './ping.pong.abi.json';
 import { ApiConfigService } from "@mvx-monorepo/common";
@@ -30,6 +30,28 @@ export class PingPongService {
     }
 
     return { status: "awaiting_pong", timeToPong: secondsRemaining };
+  }
+
+  generatePingTransaction(address: Address): any {
+    const pingTransaction = this.smartContract.methods.ping()
+      .withSender(address)
+      .withValue(TokenTransfer.egldFromAmount(1))
+      .withGasLimit(60000000)
+      .withChainID(this.apiConfigService.getChainId())
+      .buildTransaction();
+
+    return pingTransaction.toPlainObject();
+  }
+
+  generatePongTransaction(address: Address): any {
+    const pongTransaction = this.smartContract.methods.pong()
+      .withSender(address)
+      .withValue(TokenTransfer.egldFromAmount(0))
+      .withGasLimit(60000000)
+      .withChainID(this.apiConfigService.getChainId())
+      .buildTransaction();
+
+    return pongTransaction.toPlainObject();
   }
 
   async getPongDeadline(address: Address): Promise<number | null> {

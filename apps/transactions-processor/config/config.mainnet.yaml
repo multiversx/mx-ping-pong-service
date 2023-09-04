@@ -1,3 +1,4 @@
+chainId: '1'
 urls:
   api: 'https://api.multiversx.com'
   redis: '127.0.0.1'
