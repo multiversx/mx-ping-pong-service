@@ -72,7 +72,7 @@ export class PingPongService {
 
   private initSmartContract(): SmartContract {
     const abiRegistry = AbiRegistry.create(JSON.parse(JSON.stringify(pingPongAbi)));
-    console.log(abiRegistry);
+
     const contractAddress = Address.fromBech32(this.apiConfigService.getPingPongContract());
 
     const contract = new SmartContract({

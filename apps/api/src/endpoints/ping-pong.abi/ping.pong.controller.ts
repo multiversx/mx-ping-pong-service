@@ -4,8 +4,8 @@ import { PingPongService } from "./ping.pong.service";
 import { Address } from "@multiversx/sdk-core/out";
 import { ParseAddressPipe } from "@multiversx/sdk-nestjs-common";
 
-@Controller('ping-pong')
-@ApiTags('ping-pong')
+@Controller('ping-pong/abi')
+@ApiTags('ping-pong.abi')
 export class PingPongController {
   constructor(
     private readonly pingPongService: PingPongService
@@ -23,8 +23,8 @@ export class PingPongController {
     description: 'The address to query',
   })
   async getTimeToPong(
-    @Param('address', ParseAddressPipe) address: Address,
+    @Param('address', ParseAddressPipe) address: string,
   ): Promise<{ status: string, timeToPong?: number }> {
-    return await this.pingPongService.getTimeToPong(address);
+    return await this.pingPongService.getTimeToPong(Address.fromString(address));
   }
 }
