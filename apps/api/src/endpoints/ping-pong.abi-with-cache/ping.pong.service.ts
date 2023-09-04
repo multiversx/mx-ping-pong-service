@@ -1,9 +1,8 @@
 import { AbiRegistry, Address, ResultsParser, SmartContract, TokenTransfer } from "@multiversx/sdk-core/out";
 import { CacheService } from "@multiversx/sdk-nestjs-cache";
-import { Constants } from "@multiversx/sdk-nestjs-common";
 import { Injectable } from "@nestjs/common";
 import pingPongAbi from './ping.pong.abi.json';
-import { ApiConfigService } from "@mvx-monorepo/common";
+import { ApiConfigService, CacheInfo } from "@mvx-monorepo/common";
 import { ApiNetworkProvider } from "@multiversx/sdk-network-providers/out";
 
 @Injectable()
@@ -59,9 +58,9 @@ export class PingPongService {
 
   async getPongDeadline(address: Address): Promise<number | null> {
     return await this.cacheService.getOrSet(
-      `pong:${address}`,
+      CacheInfo.PongDeadline(address).key,
       async () => await this.getPongDeadlineRaw(address),
-      Constants.oneMinute() * 10,
+      CacheInfo.PongDeadline(address).ttl,
     );
   }
 
