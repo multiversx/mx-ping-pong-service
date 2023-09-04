@@ -24,7 +24,7 @@ features:
 nativeAuth:
   maxExpirySeconds:
   acceptedOrigins:
-    - utils.multiversx.com
+    - https://utils.multiversx.com
 security:
   admins:
 rateLimiterSecret:
