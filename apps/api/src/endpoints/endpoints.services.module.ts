@@ -1,4 +1,4 @@
-import { ApiConfigModule, DynamicModuleUtils } from "@mvx-monorepo/common";
+import { ApiConfigModule, DynamicModuleUtils, StatsModule } from "@mvx-monorepo/common";
 import { Module } from "@nestjs/common";
 import configuration from '../../config/configuration';
 import { PingPongModule as PingPongRawModule } from "./ping-pong.raw/ping.pong.module";
@@ -10,6 +10,7 @@ import { PingPongModule as PingPongAbiWithCacheModule } from "./ping-pong.abi-wi
     PingPongRawModule,
     PingPongAbiModule,
     PingPongAbiWithCacheModule,
+    StatsModule.forRoot(configuration),
     ApiConfigModule.forRoot(configuration),
     DynamicModuleUtils.getCachingModule(configuration),
   ],
@@ -20,6 +21,7 @@ import { PingPongModule as PingPongAbiWithCacheModule } from "./ping-pong.abi-wi
     PingPongRawModule,
     PingPongAbiModule,
     PingPongAbiWithCacheModule,
+    StatsModule,
   ],
 })
 export class EndpointsServicesModule { }
