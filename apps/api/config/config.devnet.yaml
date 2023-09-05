@@ -2,9 +2,9 @@ chainId: 'D'
 urls:
   api: 'https://devnet-api.multiversx.com'
   swagger:
-    - 'https://devnet-microservice.multiversx.com'
-    - 'https://testnet-microservice.multiversx.com'
-    - 'https://microservice.multiversx.com'
+    - 'https://devnet-template-api.multiversx.com'
+    - 'https://testnet-template-api.multiversx.com'
+    - 'https://template-api.multiversx.com'
   redis: '127.0.0.1'
 features:
   publicApi:
