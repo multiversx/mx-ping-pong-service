@@ -60,16 +60,12 @@ async function bootstrap() {
 
   const description = readFileSync(join(__dirname, '..', 'docs', 'swagger.md'), 'utf8');
 
-  let documentBuilder = new DocumentBuilder()
+  const documentBuilder = new DocumentBuilder()
     .setTitle('MultiversX Microservice API')
     .setDescription(description)
     .setVersion('1.0.0')
-    .setExternalDoc('MultiversX Docs', 'https://docs.multiversx.com');
-
-  const apiUrls = apiConfigService.getSwaggerUrls();
-  for (const apiUrl of apiUrls) {
-    documentBuilder = documentBuilder.addServer(apiUrl);
-  }
+    .setExternalDoc('MultiversX Docs', 'https://docs.multiversx.com')
+    .addBearerAuth();
 
   const config = documentBuilder.build();
 

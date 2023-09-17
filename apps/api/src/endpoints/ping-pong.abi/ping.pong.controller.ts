@@ -1,5 +1,5 @@
 import { Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { PingPongService } from "./ping.pong.service";
 import { Address } from "@multiversx/sdk-core/out";
 import { NativeAuth, NativeAuthGuard } from "@multiversx/sdk-nestjs-auth";
@@ -7,6 +7,7 @@ import { NativeAuth, NativeAuthGuard } from "@multiversx/sdk-nestjs-auth";
 @Controller('ping-pong/abi')
 @ApiTags('ping-pong.abi')
 @UseGuards(NativeAuthGuard)
+@ApiBearerAuth()
 export class PingPongController {
   constructor(
     private readonly pingPongService: PingPongService
