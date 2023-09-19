@@ -14,15 +14,6 @@ export class ApiConfigService {
     return apiUrl;
   }
 
-  getSwaggerUrls(): string[] {
-    const swaggerUrls = this.configService.get<string[]>('urls.swagger');
-    if (!swaggerUrls) {
-      throw new Error('No swagger urls present');
-    }
-
-    return swaggerUrls;
-  }
-
   getRedisUrl(): string {
     const redisUrl = this.configService.get<string>('urls.redis');
     if (!redisUrl) {

@@ -1,10 +1,6 @@
 chainId: 'T'
 urls:
   api: 'https://testnet-api.multiversx.com'
-  swagger:
-    - 'https://devnet-template-api.multiversx.com'
-    - 'https://testnet-template-api.multiversx.com'
-    - 'https://template-api.multiversx.com'
   redis: '127.0.0.1'
 features:
   publicApi:

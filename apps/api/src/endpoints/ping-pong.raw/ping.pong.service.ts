@@ -2,6 +2,7 @@ import { Address, TokenTransfer, Transaction, TransactionPayload } from "@multiv
 import { Injectable } from "@nestjs/common";
 import { ApiConfigService } from "@mvx-monorepo/common";
 import { ApiService } from "@multiversx/sdk-nestjs-http";
+import { BinaryUtils } from "@multiversx/sdk-nestjs-common";
 
 @Injectable()
 export class PingPongService {
@@ -76,9 +77,8 @@ export class PingPongService {
       [address.hex()]
     );
 
-
     const returnData = result.data.returnData;
-    if (returnData.length === 0) {
+    if (!returnData || returnData.length === 0) {
       return undefined;
     }
 
@@ -86,7 +86,7 @@ export class PingPongService {
       return 0;
     }
 
-    return parseInt(Buffer.from(returnData[0], 'base64').toString('hex'), 16);
+    return BinaryUtils.hexToNumber(BinaryUtils.base64ToHex(returnData[0]));
   }
 
   async vmQuery(contract: string, func: string, caller: string | undefined, args: string[] = []): Promise<any> {
