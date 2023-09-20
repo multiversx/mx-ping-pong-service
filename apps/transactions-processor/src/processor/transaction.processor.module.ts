@@ -11,6 +11,7 @@ import configuration from '../../config/configuration';
     DynamicModuleUtils.getCachingModule(configuration),
   ],
   providers: [
+    DynamicModuleUtils.getPubSubService(),
     TransactionProcessorService,
   ],
 })
