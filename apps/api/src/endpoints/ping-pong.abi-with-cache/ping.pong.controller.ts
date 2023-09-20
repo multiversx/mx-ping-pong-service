@@ -29,10 +29,10 @@ export class PingPongController {
     status: 200,
     description: '',
   })
-  ping(
+  async ping(
     @NativeAuth('address') address: string,
   ): Promise<any> {
-    return this.pingPongService.generatePingTransaction(Address.fromString(address));
+    return await this.pingPongService.generatePingTransaction(Address.fromString(address));
   }
 
   @Post("/pong")
@@ -40,9 +40,9 @@ export class PingPongController {
     status: 200,
     description: '',
   })
-  pong(
+  async pong(
     @NativeAuth('address') address: string,
   ): Promise<any> {
-    return this.pingPongService.generatePongTransaction(Address.fromString(address));
+    return await this.pingPongService.generatePongTransaction(Address.fromString(address));
   }
 }
