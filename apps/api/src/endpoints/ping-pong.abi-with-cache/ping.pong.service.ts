@@ -34,23 +34,29 @@ export class PingPongService {
     return { status: "awaiting_pong", timeToPong: secondsRemaining };
   }
 
-  generatePingTransaction(address: Address): any {
+  async generatePingTransaction(address: Address): Promise<any> {
+    const account = await this.networkProvider.getAccount(address);
+
     const pingTransaction = this.smartContract.methods.ping()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(1))
       .withGasLimit(60000000)
       .withChainID(this.apiConfigService.getChainId())
+      .withNonce(account.nonce)
       .buildTransaction();
 
     return pingTransaction.toPlainObject();
   }
 
-  generatePongTransaction(address: Address): any {
+  async generatePongTransaction(address: Address): Promise<any> {
+    const account = await this.networkProvider.getAccount(address);
+
     const pongTransaction = this.smartContract.methods.pong()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(0))
       .withGasLimit(60000000)
       .withChainID(this.apiConfigService.getChainId())
+      .withNonce(account.nonce)
       .buildTransaction();
 
     return pongTransaction.toPlainObject();

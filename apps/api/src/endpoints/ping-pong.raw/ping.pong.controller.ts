@@ -29,10 +29,8 @@ export class PingPongController {
     status: 200,
     description: '',
   })
-  ping(
-    @NativeAuth('address') address: string,
-  ): Promise<any> {
-    return this.pingPongService.generatePingTransaction(Address.fromString(address));
+  async ping(@NativeAuth('address') address: string): Promise<any> {
+    return await this.pingPongService.generatePingTransaction(Address.fromString(address));
   }
 
   @Post("/pong")

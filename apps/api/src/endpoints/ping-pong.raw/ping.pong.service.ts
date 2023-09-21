@@ -27,8 +27,9 @@ export class PingPongService {
     return { status: "awaiting_pong", timeToPong: secondsRemaining };
   }
 
-  generatePingTransaction(address: Address): any {
+  async generatePingTransaction(address: Address): Promise<any> {
     const contract = this.apiConfigService.getPingPongContract();
+    const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
     const pingTransaction = new Transaction({
       data: new TransactionPayload("ping"),
@@ -37,6 +38,7 @@ export class PingPongService {
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(1),
       chainID: this.apiConfigService.getChainId(),
+      nonce,
     });
 
     return pingTransaction.toPlainObject();
