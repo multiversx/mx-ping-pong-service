@@ -31,7 +31,10 @@ export class PingPongService {
     const contract = this.apiConfigService.getPingPongContract();
     const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
+    const account = await this.getAccount(address);
+
     const pingTransaction = new Transaction({
+      nonce: account.nonce,
       data: new TransactionPayload("ping"),
       gasLimit: 60000000,
       sender: address,
@@ -48,7 +51,10 @@ export class PingPongService {
     const contract = this.apiConfigService.getPingPongContract();
     const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
+    const account = await this.getAccount(address);
+
     const pongTransaction = new Transaction({
+      nonce: account.nonce,
       data: new TransactionPayload("pong"),
       gasLimit: 60000000,
       sender: address,
@@ -71,6 +77,13 @@ export class PingPongService {
     date.setSeconds(date.getSeconds() + secondsToPong);
 
     return date.getTime();
+  }
+
+  async getAccount(address: Address): Promise<any> {
+    const url = `${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}`;
+
+    const { data } = await this.apiService.get(url);
+    return data;
   }
 
   async queryTimeToPong(address: Address): Promise<number | undefined> {

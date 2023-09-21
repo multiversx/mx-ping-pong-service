@@ -2,9 +2,10 @@
 import { CacheService } from "@multiversx/sdk-nestjs-cache";
 import { Locker } from "@multiversx/sdk-nestjs-common";
 import { TransactionProcessor } from "@multiversx/sdk-transaction-processor";
-import { Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
 import { ApiConfigService, CacheInfo } from "@mvx-monorepo/common";
+import { ClientProxy } from "@nestjs/microservices";
 
 @Injectable()
 export class TransactionProcessorService {
@@ -13,7 +14,8 @@ export class TransactionProcessorService {
 
   constructor(
     private readonly apiConfigService: ApiConfigService,
-    private readonly cacheService: CacheService
+    private readonly cacheService: CacheService,
+    @Inject('PUBSUB_SERVICE') private clientProxy: ClientProxy,
   ) {
     this.logger = new Logger(TransactionProcessorService.name);
   }
@@ -32,7 +34,8 @@ export class TransactionProcessorService {
             if (transaction.receiver === this.apiConfigService.getPingPongContract()) {
               const data = transaction.getDataFunctionName();
               if (data && ['ping', 'pong'].includes(data)) {
-                await this.cacheService.deleteInCache(`pong:${transaction.sender}`);
+                this.logger.log('PING/PONG transaction detected');
+                await this.deleteCacheKey(`pong:${transaction.sender}`);
               }
             }
           }
@@ -45,5 +48,9 @@ export class TransactionProcessorService {
         },
       });
     });
+  }
+
+  private deleteCacheKey(key: string) {
+    this.clientProxy.emit('deleteCacheKeys', [key]);
   }
 }

@@ -29,7 +29,9 @@ export class PingPongController {
     status: 200,
     description: '',
   })
-  async ping(@NativeAuth('address') address: string): Promise<any> {
+  async ping(
+    @NativeAuth('address') address: string,
+  ): Promise<any> {
     return await this.pingPongService.generatePingTransaction(Address.fromString(address));
   }
 
@@ -38,9 +40,9 @@ export class PingPongController {
     status: 200,
     description: '',
   })
-  pong(
+  async pong(
     @NativeAuth('address') address: string,
   ): Promise<any> {
-    return this.pingPongService.generatePongTransaction(Address.fromString(address));
+    return await this.pingPongService.generatePongTransaction(Address.fromString(address));
   }
 }
