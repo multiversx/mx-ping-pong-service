@@ -44,8 +44,9 @@ export class PingPongService {
     return pingTransaction.toPlainObject();
   }
 
-  generatePongTransaction(address: Address): any {
+  async generatePongTransaction(address: Address): Promise<any> {
     const contract = this.apiConfigService.getPingPongContract();
+    const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
     const pongTransaction = new Transaction({
       data: new TransactionPayload("pong"),
@@ -54,6 +55,7 @@ export class PingPongService {
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(0),
       chainID: this.apiConfigService.getChainId(),
+      nonce,
     });
 
     return pongTransaction.toPlainObject();
