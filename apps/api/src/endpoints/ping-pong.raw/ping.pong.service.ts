@@ -29,17 +29,16 @@ export class PingPongService {
 
   async generatePingTransaction(address: Address): Promise<any> {
     const contract = this.apiConfigService.getPingPongContract();
-
-    const account = await this.getAccount(address);
+    const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
     const pingTransaction = new Transaction({
-      nonce: account.nonce,
       data: new TransactionPayload("ping"),
-      gasLimit: 60000000,
+      gasLimit: 6_000_000,
       sender: address,
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(1),
       chainID: this.apiConfigService.getChainId(),
+      nonce,
     });
 
     return pingTransaction.toPlainObject();
@@ -47,17 +46,16 @@ export class PingPongService {
 
   async generatePongTransaction(address: Address): Promise<any> {
     const contract = this.apiConfigService.getPingPongContract();
-
-    const account = await this.getAccount(address);
+    const { data: nonce } = await this.apiService.get(`${this.apiConfigService.getApiUrl()}/accounts/${address.bech32()}?extract=nonce`);
 
     const pongTransaction = new Transaction({
-      nonce: account.nonce,
       data: new TransactionPayload("pong"),
-      gasLimit: 60000000,
+      gasLimit: 6_000_000,
       sender: address,
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(0),
       chainID: this.apiConfigService.getChainId(),
+      nonce,
     });
 
     return pongTransaction.toPlainObject();

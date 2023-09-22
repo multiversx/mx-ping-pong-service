@@ -1,4 +1,4 @@
-import { AbiRegistry, Account, Address, ResultsParser, SmartContract, TokenTransfer } from "@multiversx/sdk-core/out";
+import { AbiRegistry, Address, ResultsParser, SmartContract, TokenTransfer } from "@multiversx/sdk-core/out";
 import { CacheService } from "@multiversx/sdk-nestjs-cache";
 import { Injectable } from "@nestjs/common";
 import pingPongAbi from './ping.pong.abi.json';
@@ -35,14 +35,12 @@ export class PingPongService {
   }
 
   async generatePingTransaction(address: Address): Promise<any> {
-    const account = new Account(address);
-    const accountOnNetwork = await this.networkProvider.getAccount(address);
-    account.update(accountOnNetwork);
+    const account = await this.networkProvider.getAccount(address);
 
     const pingTransaction = this.smartContract.methods.ping()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(1))
-      .withGasLimit(60000000)
+      .withGasLimit(6_000_000)
       .withChainID(this.apiConfigService.getChainId())
       .withNonce(account.nonce)
       .buildTransaction();
@@ -51,14 +49,12 @@ export class PingPongService {
   }
 
   async generatePongTransaction(address: Address): Promise<any> {
-    const account = new Account(address);
-    const accountOnNetwork = await this.networkProvider.getAccount(address);
-    account.update(accountOnNetwork);
+    const account = await this.networkProvider.getAccount(address);
 
     const pongTransaction = this.smartContract.methods.pong()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(0))
-      .withGasLimit(60000000)
+      .withGasLimit(6_000_000)
       .withChainID(this.apiConfigService.getChainId())
       .withNonce(account.nonce)
       .buildTransaction();
