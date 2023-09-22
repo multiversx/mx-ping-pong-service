@@ -38,7 +38,7 @@ export class PingPongService {
     const pingTransaction = this.smartContract.methods.ping()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(1))
-      .withGasLimit(60000000)
+      .withGasLimit(6_000_000)
       .withChainID(this.apiConfigService.getChainId())
       .withNonce(account.nonce)
       .buildTransaction();
@@ -52,7 +52,7 @@ export class PingPongService {
     const pongTransaction = this.smartContract.methods.pong()
       .withSender(address)
       .withValue(TokenTransfer.egldFromAmount(0))
-      .withGasLimit(60000000)
+      .withGasLimit(6_000_000)
       .withChainID(this.apiConfigService.getChainId())
       .withNonce(account.nonce)
       .buildTransaction();

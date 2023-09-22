@@ -33,7 +33,7 @@ export class PingPongService {
 
     const pingTransaction = new Transaction({
       data: new TransactionPayload("ping"),
-      gasLimit: 60000000,
+      gasLimit: 6_000_000,
       sender: address,
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(1),
@@ -50,7 +50,7 @@ export class PingPongService {
 
     const pongTransaction = new Transaction({
       data: new TransactionPayload("pong"),
-      gasLimit: 60000000,
+      gasLimit: 6_000_000,
       sender: address,
       receiver: Address.fromString(contract),
       value: TokenTransfer.egldFromAmount(0),
