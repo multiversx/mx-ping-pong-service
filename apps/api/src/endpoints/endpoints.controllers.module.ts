@@ -6,6 +6,7 @@ import { PingPongController as PingPongRawController } from "./ping-pong.raw/pin
 import { PingPongController as PingPongAbiController } from "./ping-pong.abi/ping.pong.controller";
 import { PingPongController as PingPongAbiWithCacheController } from "./ping-pong.abi-with-cache/ping.pong.controller";
 import { StatsController } from "./stats/stats.controller";
+import { AccountController } from "./account/account.controller";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { StatsController } from "./stats/stats.controller";
     DynamicModuleUtils.getNestJsApiConfigService(),
   ],
   controllers: [
+    AccountController,
     HealthCheckController,
     PingPongRawController,
     PingPongAbiController,
