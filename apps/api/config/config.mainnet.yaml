@@ -26,4 +26,4 @@ keepAliveTimeout:
   upstream: 60000
 useCachingInterceptor: false
 contracts:
-  pingPong: 'erd1qqqqqqqqqqqqqpgq72l6vl07fkn3alyfq753mcy4nakm0l72396qkcud5x'
+  pingPong: 'erd1qqqqqqqqqqqqqpgqh5ce39gfe74y9c0x9ydufszs287wgemf9l5q6zxjhu'
