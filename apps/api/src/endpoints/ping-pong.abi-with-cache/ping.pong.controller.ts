@@ -21,7 +21,7 @@ export class PingPongController {
   async getTimeToPong(
     @NativeAuth('address') address: string,
   ): Promise<{ status: string, timeToPong?: number }> {
-    return await this.pingPongService.getTimeToPong(Address.fromString(address));
+    return await this.pingPongService.getTimeToPong(Address.newFromBech32(address));
   }
 
   @Post("/ping")
@@ -32,7 +32,7 @@ export class PingPongController {
   async ping(
     @NativeAuth('address') address: string,
   ): Promise<any> {
-    return await this.pingPongService.generatePingTransaction(Address.fromString(address));
+    return await this.pingPongService.generatePingTransaction(Address.newFromBech32(address));
   }
 
   @Post("/pong")
@@ -43,6 +43,6 @@ export class PingPongController {
   async pong(
     @NativeAuth('address') address: string,
   ): Promise<any> {
-    return await this.pingPongService.generatePongTransaction(Address.fromString(address));
+    return await this.pingPongService.generatePongTransaction(Address.newFromBech32(address));
   }
 }
